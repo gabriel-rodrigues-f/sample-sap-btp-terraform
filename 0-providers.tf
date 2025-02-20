@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "btp" {
-  globalaccount = "76fb11eetrial-ga"
+  globalaccount = var.domain
 }
 
 provider "cloudfoundry" {

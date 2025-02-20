@@ -11,13 +11,6 @@ resource "btp_subaccount_environment_instance" "qa_app_dev_rpa" {
   })
 }
 
-resource "btp_subaccount_entitlement" "cloud_foundry" {
-  subaccount_id = btp_subaccount.qa_app_dev_rpa.id
-  service_name  = "APPLICATION_RUNTIME"
-  plan_name     = "MEMORY"
-  amount        = 1
-}
-
 data "btp_subaccount_environment_instance" "cloudfoudry" {
   id            = btp_subaccount_environment_instance.qa_app_dev_rpa.id
   subaccount_id = btp_subaccount.qa_app_dev_rpa.id
