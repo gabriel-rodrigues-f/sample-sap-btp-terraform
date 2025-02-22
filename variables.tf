@@ -30,22 +30,22 @@ variable "sap_corporate_password" {
   default     = "cCoroJZTXNkl2"
 }
 
-variable "subaccount_admin_profile" {
+variable "subaccount_app_dev_rpa_admin_assignment" {
   description = "SAP BTP Admin Role"
   type        = list(string)
 }
 
-variable "subaccount_view_only_profile" {
+variable "subaccount_app_dev_rpa_viewer_assignment" {
   description = "SAP BTP View Only Role"
   type        = list(string)
 }
 
-variable "subaccount_admin_users" {
+variable "subaccount_app_dev_rpa_admins" {
   description = "Admin users"
   type        = list(string)
 }
 
-variable "subaccount_view_only_users" {
+variable "subaccount_app_dev_rpa_viewers" {
   description = "Admin users"
   type        = list(string)
 }
