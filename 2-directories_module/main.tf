@@ -26,27 +26,11 @@ resource "btp_directory" "app_dev_rpa" {
   depends_on  = [btp_directory.root]
 }
 
-resource "btp_directory" "integration" {
-  parent_id   = btp_directory.root.id
-  name        = "INTEGRATION"
-  description = "Integration directory"
-  labels      = merge(local.default_labels, { team = ["integration_team"] })
-  depends_on  = [btp_directory.root]
-}
-
 resource "btp_directory" "data_analytics" {
   parent_id   = btp_directory.root.id
   name        = "DATA_ANALYTICS"
   description = "Data and Analytics directory"
   labels      = merge(local.default_labels, { team = ["data_analytics_team"] })
-  depends_on  = [btp_directory.root]
-}
-
-resource "btp_directory" "ai" {
-  parent_id   = btp_directory.root.id
-  name        = "AI"
-  description = "AI directory"
-  labels      = merge(local.default_labels, { team = ["ai_team"] })
   depends_on  = [btp_directory.root]
 }
 
