@@ -13,18 +13,18 @@ variable "env" {
   type        = string
 }
 
-variable "cloud_foundry_api_url" {
+variable "cloud_foundry_api" {
   description = "SAP P-User"
   type        = string
 }
 
-variable "sap_corporate_id" {
+variable "cloud_foundry_user" {
   description = "SAP P-User"
   type        = string
   default     = "P2006753601"
 }
 
-variable "sap_corporate_password" {
+variable "cloud_foundry_password" {
   description = "Default user"
   type        = string
   default     = "cCoroJZTXNkl2"

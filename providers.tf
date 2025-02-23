@@ -17,9 +17,9 @@ provider "btp" {
 }
 
 provider "cloudfoundry" {
-  api_url             = var.cloud_foundry_api_url
-  user                = var.sap_corporate_id
-  password            = var.sap_corporate_password
+  api_url             = var.cloud_foundry_api
+  user                = var.cloud_foundry_user
+  password            = var.cloud_foundry_password
   skip_ssl_validation = true
   origin              = "sap.ids"
   app_logs_max        = 30

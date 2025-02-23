@@ -1,15 +1,5 @@
-module "global_account" {
-  source                 = "./1-global_account_module"
-  global_account_manager = var.global_account_manager
-
-  providers = {
-    btp = btp
-  }
-}
-
 module "directories" {
-  source     = "./2-directories_module"
-  depends_on = [module.global_account]
+  source = "./0-directories"
 
   providers = {
     btp = btp
@@ -17,12 +7,10 @@ module "directories" {
 }
 
 module "subaccounts" {
-  source                   = "./3-subaccounts_module"
-  env                      = var.env
-  depends_on               = [module.directories]
-  app_dev_rpa_directory    = module.directories.app_dev_rpa_directory
-  security_directory       = module.directories.security_directory
-  data_analytics_directory = module.directories.data_analytics_directory
+  source                = "./1-subaccounts"
+  env                   = var.env
+  depends_on            = [module.directories]
+  app_dev_rpa_directory = module.directories.app_dev_rpa_directory
 
   providers = {
     btp = btp
@@ -30,21 +18,44 @@ module "subaccounts" {
 }
 
 module "entitlements" {
-  source     = "./4-entitlements_module"
+  source     = "./2-entitlements"
   depends_on = [module.subaccounts]
 
-  app_dev_rpa_subaccount    = module.subaccounts.app_dev_rpa_subaccount
-  data_analytics_subaccount = module.subaccounts.data_analytics_subaccount
-  security_subaccount       = module.subaccounts.security_subaccount
+  app_dev_rpa_subaccount = module.subaccounts.app_dev_rpa_subaccount
 }
 
+module "environments" {
+  source                 = "./3-environments"
+  depends_on             = [module.entitlements]
+  app_dev_rpa_subaccount = module.subaccounts.app_dev_rpa_subaccount
+
+  providers = {
+    btp          = btp
+    cloudfoundry = cloudfoundry
+  }
+}
+
+module "subscriptions" {
+  source                 = "./4-subscriptions"
+  depends_on             = [module.environments]
+  app_dev_rpa_subaccount = module.subaccounts.app_dev_rpa_subaccount
+
+  providers = {
+    btp = btp
+  }
+}
+
+# module "services" {
+#   source     = "./5-services"
+#   depends_on = [module.subscriptions]
+#   app_dev_rpa_dev_space = var.app_dev_rpa_dev_space
+# }
+
 # module "subaccounts_role_assignment" {
-#   source     = "./4-subaccounts_role_assignment_module"
+#   source     = "./6-subaccounts_role_assignment"
 #   depends_on = [module.entitlements]
 
-#   app_dev_rpa_subaccount    = module.subaccounts.app_dev_rpa_subaccount
-#   data_analytics_subaccount = module.subaccounts.data_analytics_subaccount
-#   security_subaccount       = module.subaccounts.security_subaccount
+#   app_dev_rpa_subaccount = module.subaccounts.app_dev_rpa_subaccount
 
 #   subaccount_app_dev_rpa_admins            = var.subaccount_app_dev_rpa_admins
 #   subaccount_app_dev_rpa_admin_assignment  = var.subaccount_app_dev_rpa_admin_assignment
