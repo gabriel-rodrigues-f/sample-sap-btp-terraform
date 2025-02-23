@@ -6,8 +6,8 @@ terraform {
       version = "1.10.0"
     }
     cloudfoundry = {
-      source  = "cloudfoundry-community/cloudfoundry"
-      version = "0.53.1"
+      source  = "SAP/cloudfoundry"
+      version = "1.0.0-rc1"
     }
   }
 }
@@ -17,10 +17,7 @@ provider "btp" {
 }
 
 provider "cloudfoundry" {
-  api_url             = var.cloud_foundry_api
-  user                = var.cloud_foundry_user
-  password            = var.cloud_foundry_password
-  skip_ssl_validation = true
-  origin              = "sap.ids"
-  app_logs_max        = 30
+  api_url  = var.cloud_foundry_api
+  user     = var.cloud_foundry_user
+  password = var.cloud_foundry_password
 }
